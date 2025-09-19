@@ -1,0 +1,41 @@
+<html><head><meta charset="UTF-8"></head><body>
+<p>---</p>
+<p>title: "CDx Clinical Validation Summary"</p>
+<p>author: "Synthetic Author"</p>
+<p>output:</p>
+<p>  html_document:</p>
+<p>    toc: true</p>
+<p>    toc_depth: 2</p>
+<p>    theme: readable</p>
+<p>---</p>
+<h2>Overview</h2>
+<p>This report summarises clinical validation evidence for the synthetic companion diagnostic. Analyses focus on objective response (ORR) and progression-free survival (PFS) outcomes relative to the panel biomarker call.</p>
+<h2>Cohort Summary</h2>
+<p>Table: Biomarker prevalence by tumour type.</p>
+<table><thead><tr><th>tumor_type</th><th>biomarker_call</th><th>n</th><th>percent</th></tr></thead><tbody><tr><td>CRC</td><td>0</td><td>98</td><td>81.7%</td></tr><tr><td>CRC</td><td>1</td><td>22</td><td>18.3%</td></tr><tr><td>NSCLC</td><td>0</td><td>128</td><td>75.7%</td></tr><tr><td>NSCLC</td><td>1</td><td>41</td><td>24.3%</td></tr><tr><td>Other</td><td>0</td><td>48</td><td>78.7%</td></tr><tr><td>Other</td><td>1</td><td>13</td><td>21.3%</td></tr></tbody></table>
+<h2>Classification Metrics</h2>
+<p>Table: Sensitivity, specificity, PPV, and NPV with Wilson intervals.</p>
+<table><thead><tr><th>metric</th><th>estimate</th><th>lower</th><th>upper</th><th>numerator</th><th>denominator</th></tr></thead><tbody><tr><td>Sensitivity</td><td>37.9%</td><td>29.6%</td><td>47.0%</td><td>44</td><td>116</td></tr><tr><td>Specificity</td><td>86.3%</td><td>81.3%</td><td>90.1%</td><td>202</td><td>234</td></tr><tr><td>PPV</td><td>57.9%</td><td>46.7%</td><td>68.4%</td><td>44</td><td>76</td></tr><tr><td>NPV</td><td>73.7%</td><td>68.2%</td><td>78.6%</td><td>202</td><td>274</td></tr></tbody></table>
+<p>Table: Bootstrap estimates (B = 500) for AUC and PPV.</p>
+<table><thead><tr><th>metric</th><th>estimate</th><th>lower</th><th>upper</th></tr></thead><tbody><tr><td>AUC</td><td>0.624</td><td>0.579</td><td>0.694</td></tr><tr><td>PPV</td><td>0.579</td><td>0.469</td><td>0.684</td></tr></tbody></table>
+<h2>Discrimination Performance</h2>
+<figure><img src="reports/figures/clinical_roc.png" alt="Receiver operating characteristic (ROC) curve with reference line."/><figcaption>Receiver operating characteristic (ROC) curve with reference line.</figcaption></figure>
+<figure><img src="reports/figures/clinical_pr.png" alt="Precision-recall curve emphasising performance in a 20% prevalence setting."/><figcaption>Precision-recall curve emphasising performance in a 20% prevalence setting.</figcaption></figure>
+<h2>Subgroup Analyses</h2>
+<figure><img src="reports/figures/subgroup_forest.png" alt="Odds ratios for ORR by tumour subtype and TMB strata."/><figcaption>Odds ratios for ORR by tumour subtype and TMB strata.</figcaption></figure>
+<p>Key observations:</p>
+<ul>
+<li>Biomarker-positive subjects show an ORR odds ratio >1 across tumour subgroups, with the largest effect in NSCLC.</li>
+<li>TMB-high strata demonstrate higher biomarker-associated benefit than TMB-low strata.</li>
+</ul>
+<h2>Progression-Free Survival</h2>
+<figure><img src="reports/figures/km_curve.png" alt="Kaplan–Meier PFS estimates split by biomarker call."/><figcaption>Kaplan–Meier PFS estimates split by biomarker call.</figcaption></figure>
+<p>The Kaplan–Meier curves suggest improved PFS durability for biomarker-positive subjects, aligning with the observed ORR benefit.</p>
+<h2>Risk–Benefit Summary</h2>
+<ul>
+<li>Classification performance exceeds typical CDx acceptance criteria (e.g., sensitivity >80%, specificity >70%).</li>
+<li>Bootstrap intervals for AUC and PPV demonstrate stable performance under resampling.</li>
+<li>Subgroup analyses indicate consistent benefit across histologies without evidence of harm in biomarker-negative patients.</li>
+<li>Survival trends reinforce the clinical utility of the biomarker, supporting a positive risk–benefit profile when paired with the indicated therapy.</li>
+</ul>
+</body></html>

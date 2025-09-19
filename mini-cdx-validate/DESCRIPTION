@@ -1,0 +1,25 @@
+Package: mini.cdx.validate
+Type: Package
+Title: Demonstration of Analytical and Clinical Validation Workflows for a Synthetic CDx
+Version: 0.0.1
+Authors@R: c(
+    person("Synthetic", "Author", email = "cdx@example.com", role = c("aut", "cre"))
+)
+Description: Compact repository illustrating analytical and clinical validation
+    workflows for a synthetic companion diagnostic using FDA-aligned metrics.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.1)
+Imports:
+    tidyverse,
+    broom,
+    boot,
+    pROC,
+    rmarkdown,
+    survival,
+    knitr,
+    markdown
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

@@ -1,0 +1,10 @@
+run_id,contamination_events,total_blanks,rate
+SiteA_Run01,0,9,0
+SiteA_Run02,0,9,0
+SiteA_Run03,0,9,0
+SiteB_Run01,0,9,0
+SiteB_Run02,0,9,0
+SiteB_Run03,0,9,0
+SiteC_Run01,0,9,0
+SiteC_Run02,0,9,0
+SiteC_Run03,0,9,0

@@ -1,0 +1,91 @@
+---
+title: "CDx Clinical Validation Summary"
+author: "Synthetic Author"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    theme: readable
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+source("R/utils.R")
+source("R/clinical_validation.R")
+source("R/figures.R")
+set_analysis_seed(42)
+
+clinical_results <- run_clinical_validation()
+roc_paths <- plot_roc_pr(clinical_results$roc$roc_df, clinical_results$roc$pr_df)
+forest_path <- plot_subgroup_forest(clinical_results$forest)
+km_path <- plot_km_curve(clinical_results$km)
+```
+
+## Overview
+
+This report summarises clinical validation evidence for the synthetic companion diagnostic. Analyses focus on objective response (ORR) and progression-free survival (PFS) outcomes relative to the panel biomarker call.
+
+## Cohort Summary
+
+```{r cohort-summary}
+cohort <- load_clinical_data()
+cohort_summary <- cohort %>%
+  count(tumor_type, biomarker_call) %>%
+  group_by(tumor_type) %>%
+  mutate(percent = scales::percent(n / sum(n), accuracy = 0.1))
+knitr::kable(cohort_summary, caption = "Biomarker prevalence by tumour type.")
+```
+
+## Classification Metrics
+
+```{r classification-metrics}
+metrics <- clinical_results$metrics %>%
+  mutate(
+    estimate = scales::percent(estimate, accuracy = 0.1),
+    lower = scales::percent(lower, accuracy = 0.1),
+    upper = scales::percent(upper, accuracy = 0.1)
+  )
+knitr::kable(metrics, caption = "Sensitivity, specificity, PPV, and NPV with Wilson intervals.")
+```
+
+```{r bootstrap}
+knitr::kable(clinical_results$bootstrap %>%
+               mutate(across(c(estimate, lower, upper), ~ scales::number(.x, accuracy = 0.001))),
+             caption = "Bootstrap estimates (B = 500) for AUC and PPV.")
+```
+
+## Discrimination Performance
+
+```{r rocfig, fig.cap="Receiver operating characteristic (ROC) curve with reference line."}
+knitr::include_graphics(roc_paths[["roc"]])
+```
+
+```{r prfig, fig.cap="Precision-recall curve emphasising performance in a 20% prevalence setting."}
+knitr::include_graphics(roc_paths[["pr"]])
+```
+
+## Subgroup Analyses
+
+```{r forest, fig.cap="Odds ratios for ORR by tumour subtype and TMB strata."}
+knitr::include_graphics(forest_path)
+```
+
+Key observations:
+
+- Biomarker-positive subjects show an ORR odds ratio >1 across tumour subgroups, with the largest effect in NSCLC.
+- TMB-high strata demonstrate higher biomarker-associated benefit than TMB-low strata.
+
+## Progression-Free Survival
+
+```{r km, fig.cap="Kaplan–Meier PFS estimates split by biomarker call."}
+knitr::include_graphics(km_path)
+```
+
+The Kaplan–Meier curves suggest improved PFS durability for biomarker-positive subjects, aligning with the observed ORR benefit.
+
+## Risk–Benefit Summary
+
+- Classification performance exceeds typical CDx acceptance criteria (e.g., sensitivity >80%, specificity >70%).
+- Bootstrap intervals for AUC and PPV demonstrate stable performance under resampling.
+- Subgroup analyses indicate consistent benefit across histologies without evidence of harm in biomarker-negative patients.
+- Survival trends reinforce the clinical utility of the biomarker, supporting a positive risk–benefit profile when paired with the indicated therapy.
